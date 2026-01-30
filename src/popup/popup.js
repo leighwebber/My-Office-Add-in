@@ -1,17 +1,20 @@
 var stageImageSource;
 var stageImage;
-
+var fromLoad = false;
+// debugger;
 Office.onReady((info) => {
     Office.context.ui.addHandlerAsync(
         Office.EventType.DialogParentMessageReceived,
         onMessageFromParent,
         onRegisterMessageComplete
     );
-    // debugger;
+    debugger;
     window.addEventListener('resize', (event) => {
         // debugger;
+        fromLoad = true;
         drawStageImage();
     });
+    
 });
 
 function sendStringToParentPage() {
@@ -54,7 +57,9 @@ function calculateAspectRatioFit(widthNative, heightNative, widthWindow, heightW
     return({width: widthCanvas, height: heightCanvas});
  }
  function onMessageFromParent(arg) {
+    debugger;
     const messageFromParent = JSON.parse(arg.message);
+    document.getElementById("testButton").onclick = () => tryCatch(testButton);
     switch(messageFromParent.messageType){
         case "sillyStuff":
             document.getElementById("message_text").innerText = messageFromParent.text;
@@ -89,10 +94,20 @@ function calculateAspectRatioFit(widthNative, heightNative, widthWindow, heightW
             stageImage.src = stageImageSource;
             drawStageImage();
             break;
-    };
+        };
 }
-
+function testButton(){
+    debugger;
+    const flexContainer = document.getElementById("flex-container");
+    const flexPanelUpper = document.getElementById("flex-panel-upper");
+    const flexPanelLower = document.getElementById("flex-panel-lower");
+    const myCanvas = document.getElementById("stage-diagram");
+    console.log("flexPanelUpper.clientHeight: " + flexPanelUpper.clientHeight);
+    console.log("myCanvas.height: " + myCanvas.height);
+    console.log("flexContainer.height: " + flexContainer.height);
+}
 function drawStageImage(){
+    if(fromLoad) return;
     if(stageImage){
         // debugger;
         const flexContainer = document.getElementById("flex-container");
@@ -110,8 +125,10 @@ function drawStageImage(){
         var newSize = calculateAspectRatioFit(naturalWidth, naturalHeight, 
             flexPanelUpper.clientWidth, flexPanelUpper.clientHeight);
         // debugger;
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
         ctx.drawImage(stageImage, 0, 0, 
             newSize.width, newSize.height);
+        flexPanelUpper.clientHeight = newSize.height;
     };
 }
 function onRegisterMessageComplete(asyncResult) {

@@ -10,7 +10,7 @@ Office.onReady((info) => {
     document.getElementById("insert-paragraph").onclick = () => tryCatch(insertParagraph);
     document.getElementById("open-dialog").onclick = () => tryCatch(openDialog);
     document.getElementById("create-icon").onclick = () => tryCatch(insertIcon);
-    document.getElementById("insert-stage-diagram").onclick = () => tryCatch(insertStageDiagram);
+    document.getElementById ("insert-stage-diagram").onclick = () => tryCatch(insertStageDiagram);
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
     
@@ -63,6 +63,7 @@ async function tryCatch(callback) {
 }
 let dialog = null;
 function openDialog() {
+    debugger;
     Office.context.ui.displayDialogAsync(
     'https://localhost:3000/popup.html',
     {height: 45, width: 55},

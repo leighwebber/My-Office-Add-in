@@ -13,25 +13,37 @@
             .outerContainer{
                  display: flex;
                  flex-direction: column;
+                 margin: 2px;
+            }
+            .outerContainer div {
+                background-color: #f1f1f1;
+                margin: 2px;
+                padding: 10px;
+                font-size: 24px;
+                flex-grow: 1;
             }
             .container {
                 display: flex;
                 flex-wrap: wrap;
                 background-color: DodgerBlue;
+                margin: 2px;
             }
             .container div {
                 background-color: #f1f1f1;
-                margin: 1px;
+                margin: 3px;
                 padding: 10px;
                 font-size: 24px;
+                flex-grow: 1;
             }
         </style>
     </head>
-    <body style="display:flex;flex-direction:column;align-items:center;justify-content:center">
-        <div class="outerContainer">
-            <div><canvas id="stage-diagram"/></div>
-            <div class="container">
-                <div>Item 1</div>
+    <body>
+        <div class="outerContainer" id="flex-container">
+            <div id="flex-panel-upper">
+                <canvas id="stage-diagram" />
+            </div>
+            <div class="container" id="flex-panel-lower">
+                <div><button id="testButton">Show size</button></div>
                 <div>Item 2</div>
                 <div>Item 3</div>  
                 <div>Item 4</div>
