@@ -9,12 +9,12 @@ Office.onReady((info) => {
         onRegisterMessageComplete
     );
     debugger;
+    fromLoad = true;
     window.addEventListener('resize', (event) => {
         // debugger;
-        fromLoad = true;
         drawStageImage();
     });
-    
+    fromLoad = false;
 });
 
 function sendStringToParentPage() {
@@ -57,7 +57,7 @@ function calculateAspectRatioFit(widthNative, heightNative, widthWindow, heightW
     return({width: widthCanvas, height: heightCanvas});
  }
  function onMessageFromParent(arg) {
-    debugger;
+    // debugger;
     const messageFromParent = JSON.parse(arg.message);
     document.getElementById("testButton").onclick = () => tryCatch(testButton);
     switch(messageFromParent.messageType){
@@ -97,7 +97,7 @@ function calculateAspectRatioFit(widthNative, heightNative, widthWindow, heightW
         };
 }
 function testButton(){
-    debugger;
+    // debugger;
     const flexContainer = document.getElementById("flex-container");
     const flexPanelUpper = document.getElementById("flex-panel-upper");
     const flexPanelLower = document.getElementById("flex-panel-lower");
@@ -126,10 +126,22 @@ function drawStageImage(){
             flexPanelUpper.clientWidth, flexPanelUpper.clientHeight);
         // debugger;
         ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        myCanvas.width = newSize.width;
+        myCanvas.height = newSize.height;
         ctx.drawImage(stageImage, 0, 0, 
             newSize.width, newSize.height);
         flexPanelUpper.clientHeight = newSize.height;
-    };
+        flexPanelUpper.clientWidth = newSize.width;
+/*         console.log("fc.offH: " + flexContainer.offsetHeight.toString() +
+            "  fpU.H: " + flexPanelUpper.offsetHeight.toString() +
+            "  fpU.W: " + flexPanelUpper.offsetWidth.toString() +
+            "  mCW: " + myCanvas.width.toString() +
+            "  mcH: " + myCanvas.height.toString() +
+            "  nsW: " + newSize.width.toString() +
+            "  nsH: " + newSize.height.toString()
+        );
+        console.log(" ");
+ */    };
 }
 function onRegisterMessageComplete(asyncResult) {
     if (asyncResult.status !== Office.AsyncResultStatus.Succeeded) {
